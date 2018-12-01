@@ -1,4 +1,6 @@
-# praetorian
+# Praetorian
+[![Build Status](https://travis-ci.org/ilanusse/praetorian.svg?branch=master)](https://travis-ci.org/ilanusse/praetorian)
+
 A minimalist Crystal authorization system inspired by https://github.com/varvet/pundit.
 
 ## Installation
