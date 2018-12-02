@@ -2,7 +2,6 @@ require "./spec_helper"
 include Praetorian
 
 describe Praetorian do
-
   describe ".authorize" do
     it "uses that class's default policy class and authorizes based on it" do
       user = User.new

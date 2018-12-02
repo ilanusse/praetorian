@@ -28,7 +28,7 @@ module Praetorian
       single_object.policy_class.new({{user}}, single_object)
     else
       # Try and use an implicit Policy class. e.g. Post -> PostPolicy
-      {{object.stringify.camelcase.id }}Policy.new({{user}}, single_object)
+      {{object.stringify.camelcase.id}}Policy.new({{user}}, single_object)
     end
 
     Praetorian.check_auth({{query}}, {{object}}, policy)
