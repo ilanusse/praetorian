@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.26.1">
+
+
+<link href="css/style.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="js/doc.js"></script>
+<script type="text/javascript">
+  CrystalDoc.base_path = "";
+</script>
+
+  <meta id="repository-name" content="github.com/ilanusse/praetorian">
+  <title>README - github.com/ilanusse/praetorian</title>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="repository-links">
+      <a href="index.html">README</a>
+    </div>
+  </div>
+
+  <div class="search-results" class="hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent " data-id="github.com/ilanusse/praetorian/Praetorian" data-name="praetorian">
+      <a href="Praetorian.html">Praetorian</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/ilanusse/praetorian/Praetorian/HasPolicy" data-name="praetorian::haspolicy">
+      <a href="Praetorian/HasPolicy.html">HasPolicy</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ilanusse/praetorian/Praetorian/NotAuthorizedException" data-name="praetorian::notauthorizedexception">
+      <a href="Praetorian/NotAuthorizedException.html">NotAuthorizedException</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ilanusse/praetorian/Praetorian/Policy" data-name="praetorian::policy">
+      <a href="Praetorian/Policy.html">Policy</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ilanusse/praetorian/Praetorian/QueryNotSupportedException" data-name="praetorian::querynotsupportedexception">
+      <a href="Praetorian/QueryNotSupportedException.html">QueryNotSupportedException</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1>Praetorian</h1>
+
+<p><a href="https://travis-ci.org/ilanusse/praetorian" target="_blank"><img src="https://travis-ci.org/ilanusse/praetorian.svg?branch=master" alt="Build Status"/></a></p>
+
+<p>A minimalist Crystal authorization system inspired by https://github.com/varvet/pundit.</p>
+
+<h2>Installation</h2>
+
+<pre><code class="language-crystal">dependencies:
+  praetorian:
+    github: ilanusse<span class="s">/praetorian</code></pre>
+
+<h2>Policies</h2>
+
+<p>Praetorian, inspired by Pundit, works with policy classes. This shard is not designed to be extra compatible with any framework but rather with flexibility in mind.
+This is a simple example that allows updating
+a post if the user is an admin, or if the post is unpublished:</p>
+
+<pre><code class="language-crystal"><span class="k">class</span> <span class="t">Post</span>
+  <span class="k">include</span> <span class="t">Praetorian</span><span class="t">::</span><span class="t">HasPolicy</span>
+
+  <span class="k">def</span> <span class="m">policy_class</span>
+    <span class="t">PostPolicy</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+
+<span class="k">class</span> <span class="t">PostPolicy</span>
+  <span class="k">include</span> <span class="t">Praetorian</span><span class="t">::</span><span class="t">Policy</span>
+
+  property user, post
+
+  <span class="k">def</span> <span class="m">initialize</span>(user, post)
+    @user <span class="o">=</span> user
+    @post <span class="o">=</span> post
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="m">update?</span>
+    user.admin? || <span class="o">!</span>post.published?
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
+
+<p>There are two things to notice here:</p>
+
+<ul><li>The Post is a class that should obey a certain Policy. We mark this by including <code><a href="Praetorian/HasPolicy.html">Praetorian::HasPolicy</a></code> and overriding the <code>policy_class</code> abstract method to return the policy class name.</li></ul>
+
+<ul><li>The Policy class includes <code><a href="Praetorian/Policy.html">Praetorian::Policy</a></code>. This adds query methods to our policy as defaults that should be overwritten as necessary.</li></ul>
+
+<p>The supported query methods are: <code>index?</code>, <code>show?</code>, <code>create?</code>, <code>new?</code>, <code>update?</code>, <code>edit?</code>, <code>destroy?</code>.</p>
+
+<p>Ok. So far, pretty simple.</p>
+
+<p>You can set up simple base classes to inherit from:</p>
+
+<pre><code class="language-crystal"><span class="k">class</span> <span class="t">ApplicationModel</span> <span class="o">&lt;</span> <span class="t">WhateverORMYouAreUsingModel</span>
+  <span class="k">include</span> <span class="t">Praetorian</span><span class="t">::</span><span class="t">HasPolicy</span> <span class="c"># So you just need to overwrite `policy_class` in each model</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="t">ApplicationPolicy</span>
+  <span class="k">include</span> <span class="t">Praetorian</span><span class="t">::</span><span class="t">Policy</span>
+
+  property user, record
+
+  <span class="k">def</span> <span class="m">initialize</span>(user, record)
+    @user <span class="o">=</span> user
+    @record <span class="o">=</span> record
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
+
+<p>Supposing that you have an instance of class <code>Post</code>, Praetorian lets you authorize the object use in
+your code flow:</p>
+
+<pre><code class="language-crystal"><span class="k">def</span> <span class="m">update</span>
+  @post <span class="o">=</span> <span class="t">Post</span>.find(params[<span class="n">:id</span>])
+  <span class="t">Praetorian</span>.authorize(current_user, @post, <span class="n">:update?</span>)
+  <span class="c"># Rest of code flow</span>
+<span class="k">end</span></code></pre>
+
+<p>A <code><a href="Praetorian/NotAuthorizedException.html">Praetorian::NotAuthorizedException</a></code> will be raised if the user is not authorized to perform said query on the record.</p>
+
+<p>You can pass an argument to override the policy class if necessary. For example:</p>
+
+<pre><code class="language-crystal"><span class="k">def</span> <span class="m">create</span>
+  @publication <span class="o">=</span> find_publication <span class="c"># assume this method returns any model that behaves like a publication</span>
+  <span class="c"># @publication.class =&gt; Post</span>
+  <span class="t">Praetorian</span>.authorize(current_user, @publication, <span class="n">:create?</span>, <span class="t">PublicationPolicy</span>)
+  <span class="c"># Rest of code flow</span>
+<span class="k">end</span></code></pre>
+
+<h1>License</h1>
+
+<p>Licensed under the MIT license, see the separate LICENSE.txt file.</p>
+</div>
+</body>
+</html>
