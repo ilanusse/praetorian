@@ -11,7 +11,7 @@ dependencies:
     github: ilanusse/praetorian
 ```
 
-## Policies
+## How to use
 
 Praetorian, inspired by Pundit, works with policy classes. This shard is not designed to be extra compatible with any framework but rather with flexibility in mind.
 This is a simple example that allows updating
@@ -48,6 +48,8 @@ There are two things to notice here:
 
 The default query methods defined in `Praetorian::Policy` are: `index?`, `show?`, `create?`, `new?`, `update?`, `edit?`, `destroy?`.
 
+A `Praetorian::NotAuthorizedException` will be raised if the user is not authorized to perform said query on the record.
+
 Ok. So far, pretty simple.
 
 You can set up a simple base class to inherit from:
@@ -76,8 +78,22 @@ def update
 end
 ```
 
-A `Praetorian::NotAuthorizedException` will be raised if the user is not authorized to perform said query on the record.
+### Including the shard as a module
 
+You can include the shard as a module in your controller base class to avoid the prefix:
+
+```crystal
+class ApplicationController
+  include Praetorian
+end
+
+class PostController < ApplicationController
+  @post = Post.find(params[:id])
+  authorize(current_user, @post, :update?) # yay no prefix
+end
+```
+
+### Using a specific policy class
 You can pass an argument to override the policy class if necessary. For example:
 
 ```crystal

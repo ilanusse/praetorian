@@ -1,4 +1,5 @@
 require "./spec_helper"
+include Praetorian
 
 describe Praetorian do
 
@@ -28,6 +29,12 @@ describe Praetorian do
       user = User.new
       comment = Comment.new(user)
       Praetorian.authorize(user, comment, :destroy?).should be_truthy
+    end
+
+    it "can be called without the shard name prefix" do
+      user = User.new
+      post = Post.new(user)
+      authorize(user, post, :index?).should be_truthy
     end
   end
 end
