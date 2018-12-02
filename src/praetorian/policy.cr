@@ -1,4 +1,8 @@
 module Praetorian
+  #
+  # A Policy is a collection of methods that responds to authorization queries. The ones listed below
+  # are defaults and should be overwritten when writing Policy classes.
+  #
   module Policy
     def index?
       false

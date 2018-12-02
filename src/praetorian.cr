@@ -1,19 +1,17 @@
 require "./praetorian/version"
 
- module Praetorian
-  
+module Praetorian
   #
-  # Exception that will be raised when authorization has failed
+  # Exception that will be raised when authorization has failed.
   #
   class NotAuthorizedException < Exception
-
     def initialize(query, record, policy)
       super("Not allowed to #{query} this #{record.to_s} using #{policy}")
     end
   end
 
   #
-  # Exception that will be raised when a query that is not supported is called
+  # Exception that will be raised when a query that is not supported is called.
   #
   class QueryNotSupportedException < Exception
     def initialize(query)
@@ -35,7 +33,7 @@ require "./praetorian/version"
   end
 
   #
-  # 
+  # Retrieves a policy from an object that should be a record or an ordered collection of records.
   #
   private def self.policy_from_record(user, record)
     single_record = record.is_a?(Array) ? record.last : record
@@ -43,7 +41,7 @@ require "./praetorian/version"
   end
 
   #
-  # Case statement that calls the query method on the policy object
+  # Case statement that calls the query method on the policy object.
   #
   private def self.check_auth(policy, query)
     case query

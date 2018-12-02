@@ -44,7 +44,7 @@ end
 ```
 
 There are two things to notice here:
-- The Post is a class that should obey to a certain Policy. We mark this by including `Praetorian::HasPolicy` and overriding the `policy_class` abstract method to return the policy class name.
+- The Post is a class that should obey a certain Policy. We mark this by including `Praetorian::HasPolicy` and overriding the `policy_class` abstract method to return the policy class name.
 
 - The Policy class includes `Praetorian::Policy`. This adds query methods to our policy as defaults that should be overwritten as necessary.
 
