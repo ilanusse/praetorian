@@ -1,5 +1,7 @@
 # Praetorian
 [![Build Status](https://travis-ci.org/ilanusse/praetorian.svg?branch=master)](https://travis-ci.org/ilanusse/praetorian)
+[![Version](https://img.shields.io/github/tag/ilanusse/praetorian.svg?maxAge=360)](https://github.com/ilanusse/praetorian/releases/latest)
+[![License](https://img.shields.io/github/license/ilanusse/praetorian.svg)](https://github.com/ilanusse/praetorian/blob/master/LICENSE)
 
 A minimalist Crystal authorization system inspired by [Pundit](https://github.com/varvet/pundit).
 
@@ -73,7 +75,7 @@ your code flow:
 ```crystal
 def update
   @post = Post.find(params[:id])
-  Praetorian.authorize(current_user, @post, :update?)
+  Praetorian.authorize(current_user, @post, :update?) # You can also use .authorise if you're a Brit
   # Rest of code flow
 end
 ```
