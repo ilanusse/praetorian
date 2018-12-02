@@ -23,5 +23,11 @@ describe Praetorian do
       post = Post.new(user)
       Praetorian.authorize(user, post, :postable?).should be_truthy
     end
+
+    it "will use an implicit Policy class if not defined in the class" do
+      user = User.new
+      comment = Comment.new(user)
+      Praetorian.authorize(user, comment, :destroy?).should be_truthy
+    end
   end
 end

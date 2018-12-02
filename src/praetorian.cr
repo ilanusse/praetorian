@@ -23,7 +23,13 @@ module Praetorian
 
   macro authorize(user, object, query)
     single_object = {{object}}.is_a?(Array) ? {{object}}.last : {{object}}
-    policy = single_object.policy_class.new({{user}}, single_object)
+    policy = if single_object.responds_to?(:policy_class)
+      # Use the defined policy class
+      single_object.policy_class.new({{user}}, single_object)
+    else
+      # Try and use an implicit Policy class. e.g. Post -> PostPolicy
+      {{object.stringify.camelcase.id }}Policy.new({{user}}, single_object)
+    end
 
     Praetorian.check_auth({{query}}, {{object}}, policy)
   end

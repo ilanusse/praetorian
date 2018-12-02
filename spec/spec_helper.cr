@@ -7,8 +7,6 @@ struct User
 end
 
 struct Post
-  include Praetorian::HasPolicy
-
   property user : User
 
   def initialize(user : User)
@@ -17,6 +15,14 @@ struct Post
 
   def policy_class
     PostPolicy
+  end
+end
+
+struct Comment
+  property user : User
+
+  def initialize(user : User)
+    @user = user
   end
 end
 
@@ -46,6 +52,19 @@ struct PublicationPolicy
   end
 
   def create?
+    true
+  end
+end
+
+struct CommentPolicy
+  include Praetorian::Policy
+
+  property user, comment
+
+  def initialize(@user : User, @comment : Comment)
+  end
+
+  def destroy?
     true
   end
 end
