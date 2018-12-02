@@ -34,6 +34,20 @@ module Praetorian
     Praetorian.check_auth({{query}}, {{object}}, policy)
   end
 
+  #
+  # Same as .authorize
+  #
+  macro authorise(user, object, query, policy_class)
+    authorize({{user}}, {{object}}, {{query}}, {{policy_class}})
+  end
+
+  macro authorise(user, object, query)
+    authorize({{user}}, {{object}}, {{query}})
+  end
+
+  #
+  # Performs actual policy query check
+  #
   macro check_auth(query, object, policy)
     raise {{NotAuthorizedException}}.new({{query}}, {{object}}, policy) unless policy.{{query.id}}
     {{object}}
