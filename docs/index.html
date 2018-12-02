@@ -41,11 +41,6 @@
       
         <ul>
   
-  <li class=" " data-id="github.com/ilanusse/praetorian/Praetorian/HasPolicy" data-name="praetorian::haspolicy">
-      <a href="Praetorian/HasPolicy.html">HasPolicy</a>
-      
-    </li>
-  
   <li class=" " data-id="github.com/ilanusse/praetorian/Praetorian/NotAuthorizedException" data-name="praetorian::notauthorizedexception">
       <a href="Praetorian/NotAuthorizedException.html">NotAuthorizedException</a>
       
@@ -53,11 +48,6 @@
   
   <li class=" " data-id="github.com/ilanusse/praetorian/Praetorian/Policy" data-name="praetorian::policy">
       <a href="Praetorian/Policy.html">Policy</a>
-      
-    </li>
-  
-  <li class=" " data-id="github.com/ilanusse/praetorian/Praetorian/QueryNotSupportedException" data-name="praetorian::querynotsupportedexception">
-      <a href="Praetorian/QueryNotSupportedException.html">QueryNotSupportedException</a>
       
     </li>
   
@@ -92,8 +82,6 @@ This is a simple example that allows updating
 a post if the user is an admin, or if the post is unpublished:</p>
 
 <pre><code class="language-crystal"><span class="k">class</span> <span class="t">Post</span>
-  <span class="k">include</span> <span class="t">Praetorian</span><span class="t">::</span><span class="t">HasPolicy</span>
-
   <span class="k">def</span> <span class="m">policy_class</span>
     <span class="t">PostPolicy</span>
   <span class="k">end</span>
@@ -117,28 +105,24 @@ a post if the user is an admin, or if the post is unpublished:</p>
 
 <p>There are two things to notice here:</p>
 
-<ul><li>The Post is a class that should obey a certain Policy. We mark this by including <code><a href="Praetorian/HasPolicy.html">Praetorian::HasPolicy</a></code> and overriding the <code>policy_class</code> abstract method to return the policy class name.</li></ul>
+<ul><li>The Post is a class that should obey a certain Policy. We can either write a <code>policy_class</code> method to return the policy class name, or Praetorian will assume the policy classname to be <code>#{model_name}Policy</code>.</li></ul>
 
-<ul><li>The Policy class includes <code><a href="Praetorian/Policy.html">Praetorian::Policy</a></code>. This adds query methods to our policy as defaults that should be overwritten as necessary.</li></ul>
+<ul><li>The Policy class includes <code><a href="Praetorian/Policy.html">Praetorian::Policy</a></code>. This adds default query methods to our policy as defaults that should be overwritten as necessary.</li></ul>
 
-<p>The supported query methods are: <code>index?</code>, <code>show?</code>, <code>create?</code>, <code>new?</code>, <code>update?</code>, <code>edit?</code>, <code>destroy?</code>.</p>
+<p>The default query methods defined in <code><a href="Praetorian/Policy.html">Praetorian::Policy</a></code> are: <code>index?</code>, <code>show?</code>, <code>create?</code>, <code>new?</code>, <code>update?</code>, <code>edit?</code>, <code>destroy?</code>.</p>
 
 <p>Ok. So far, pretty simple.</p>
 
-<p>You can set up simple base classes to inherit from:</p>
+<p>You can set up a simple base class to inherit from:</p>
 
-<pre><code class="language-crystal"><span class="k">class</span> <span class="t">ApplicationModel</span> <span class="o">&lt;</span> <span class="t">WhateverORMYouAreUsingModel</span>
-  <span class="k">include</span> <span class="t">Praetorian</span><span class="t">::</span><span class="t">HasPolicy</span> <span class="c"># So you just need to overwrite `policy_class` in each model</span>
-<span class="k">end</span>
-
-<span class="k">class</span> <span class="t">ApplicationPolicy</span>
+<pre><code class="language-crystal"><span class="k">class</span> <span class="t">ApplicationPolicy</span>
   <span class="k">include</span> <span class="t">Praetorian</span><span class="t">::</span><span class="t">Policy</span>
 
-  property user, record
+  property user, object
 
-  <span class="k">def</span> <span class="m">initialize</span>(user, record)
+  <span class="k">def</span> <span class="m">initialize</span>(user, object)
     @user <span class="o">=</span> user
-    @record <span class="o">=</span> record
+    @object <span class="o">=</span> object
   <span class="k">end</span>
 <span class="k">end</span></code></pre>
 

@@ -50,21 +50,17 @@ The default query methods defined in `Praetorian::Policy` are: `index?`, `show?`
 
 Ok. So far, pretty simple.
 
-You can set up simple base classes to inherit from:
+You can set up a simple base class to inherit from:
 
 ```crystal
-class ApplicationModel < WhateverORMYouAreUsingModel
-  include Praetorian::HasPolicy # So you just need to overwrite `policy_class` in each model
-end
-
 class ApplicationPolicy
   include Praetorian::Policy
 
-  property user, record
+  property user, object
 
-  def initialize(user, record)
+  def initialize(user, object)
     @user = user
-    @record = record
+    @object = object
   end
 end
 ```

@@ -1,6 +1,5 @@
 require "spec"
 require "../src/praetorian"
-require "../src/praetorian/has_policy"
 require "../src/praetorian/policy"
 
 struct User
