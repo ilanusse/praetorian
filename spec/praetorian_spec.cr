@@ -15,7 +15,13 @@ describe Praetorian do
     it "can be given a different policy class" do
       user = User.new
       post = Post.new(user)
-      Praetorian.authorize(user, post, :create?, policy_class: PublicationPolicy).should be_truthy
+      Praetorian.authorize(user, post, :create?, PublicationPolicy).should be_truthy
+    end
+
+    it "can use a self-defined query method" do
+      user = User.new
+      post = Post.new(user)
+      Praetorian.authorize(user, post, :postable?).should be_truthy
     end
   end
 end

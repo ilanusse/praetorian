@@ -23,14 +23,16 @@ end
 struct PostPolicy
   include Praetorian::Policy
 
-  property user, record
+  property user, post
 
-  def initialize(user : User, record : Post)
-    @user = user
-    @record = record
+  def initialize(@user : User, @post : Post)
   end
 
   def index?
+    true
+  end
+
+  def postable?
     true
   end
 end
@@ -38,11 +40,9 @@ end
 struct PublicationPolicy
   include Praetorian::Policy
 
-  property user, record
+  property user, post
 
-  def initialize(user : User, record : Post)
-    @user = user
-    @record = record
+  def initialize(@user : User, @post : Post)
   end
 
   def create?

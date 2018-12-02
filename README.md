@@ -46,9 +46,9 @@ end
 There are two things to notice here:
 - The Post is a class that should obey a certain Policy. We mark this by including `Praetorian::HasPolicy` and overriding the `policy_class` abstract method to return the policy class name.
 
-- The Policy class includes `Praetorian::Policy`. This adds query methods to our policy as defaults that should be overwritten as necessary.
+- The Policy class includes `Praetorian::Policy`. This adds default query methods to our policy as defaults that should be overwritten as necessary.
 
-The supported query methods are: `index?`, `show?`, `create?`, `new?`, `update?`, `edit?`, `destroy?`.
+The default query methods defined in `Praetorian::Policy` are: `index?`, `show?`, `create?`, `new?`, `update?`, `edit?`, `destroy?`.
 
 Ok. So far, pretty simple.
 
