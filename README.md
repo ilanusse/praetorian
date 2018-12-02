@@ -41,6 +41,14 @@ class PostPolicy
     user.admin? || !post.published?
   end
 end
+
+
+# Somewhere in your code
+def update
+  @post = Post.find(params[:id])
+  Praetorian.authorize(current_user, @post, :update?) # You can also use .authorise if you're a Brit
+  # Rest of code flow
+end
 ```
 
 There are two things to notice here:
@@ -66,17 +74,6 @@ class ApplicationPolicy
     @user = user
     @object = object
   end
-end
-```
-
-Supposing that you have an instance of class `Post`, Praetorian lets you authorize the object use in
-your code flow:
-
-```crystal
-def update
-  @post = Post.find(params[:id])
-  Praetorian.authorize(current_user, @post, :update?) # You can also use .authorise if you're a Brit
-  # Rest of code flow
 end
 ```
 
