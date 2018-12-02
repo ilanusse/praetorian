@@ -1,2 +1,4 @@
 /bin/
 /.shards/
+shard.lock
+/lib/
