@@ -52,7 +52,7 @@ end
 ```
 
 There are two things to notice here:
-- The Post is a class that should obey a certain Policy. We can either write a `policy_class` method to return the policy class name, or Praetorian will assume the policy classname to be `#{model_name}Policy`.
+- The Post is a class that should obey a certain Policy. We can either write a `policy_class` method to return the policy class name, or Praetorian will assume the policy classname to be `#{variable_name}Policy`.
 
 - The Policy class includes `Praetorian::Policy`. This adds default query methods to our policy as defaults that should be overwritten as necessary.
 

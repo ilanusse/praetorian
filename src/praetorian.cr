@@ -27,7 +27,7 @@ module Praetorian
       # Use the defined policy class
       single_object.policy_class.new({{user}}, single_object)
     else
-      # Try and use an implicit Policy class. e.g. Post -> PostPolicy
+      # Try and use an implicit Policy class using object variable. e.g. var named post -> PostPolicy
       {{object.stringify.camelcase.id}}Policy.new({{user}}, single_object)
     end
 
