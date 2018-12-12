@@ -3,7 +3,7 @@
 [![Version](https://img.shields.io/github/tag/ilanusse/praetorian.svg?maxAge=360)](https://github.com/ilanusse/praetorian/releases/latest)
 [![License](https://img.shields.io/github/license/ilanusse/praetorian.svg)](https://github.com/ilanusse/praetorian/blob/master/LICENSE)
 
-A minimalist Crystal authorization system inspired by [Pundit](https://github.com/varvet/pundit).
+Praetorian is a minimalist Crystal authorization system inspired by [Pundit](https://github.com/varvet/pundit). It aims to be both lightweight and dependency-less.
 
 ## Installation
 

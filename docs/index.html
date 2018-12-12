@@ -65,9 +65,11 @@
 <div class="main-content">
 <h1>Praetorian</h1>
 
-<p><a href="https://travis-ci.org/ilanusse/praetorian" target="_blank"><img src="https://travis-ci.org/ilanusse/praetorian.svg?branch=master" alt="Build Status"/></a></p>
+<p><a href="https://travis-ci.org/ilanusse/praetorian" target="_blank"><img src="https://travis-ci.org/ilanusse/praetorian.svg?branch=master" alt="Build Status"/></a>
+<a href="https://github.com/ilanusse/praetorian/releases/latest" target="_blank"><img src="https://img.shields.io/github/tag/ilanusse/praetorian.svg?maxAge=360" alt="Version"/></a>
+<a href="https://github.com/ilanusse/praetorian/blob/master/LICENSE" target="_blank"><img src="https://img.shields.io/github/license/ilanusse/praetorian.svg" alt="License"/></a></p>
 
-<p>A minimalist Crystal authorization system inspired by https://github.com/varvet/pundit.</p>
+<p>Praetorian is a minimalist Crystal authorization system inspired by <a href="https://github.com/varvet/pundit" target="_blank">Pundit</a>. It aims to be both lightweight and dependency-less.</p>
 
 <h2>Installation</h2>
 
@@ -75,7 +77,7 @@
   praetorian:
     github: ilanusse<span class="s">/praetorian</code></pre>
 
-<h2>Policies</h2>
+<h2>How to use</h2>
 
 <p>Praetorian, inspired by Pundit, works with policy classes. This shard is not designed to be extra compatible with any framework but rather with flexibility in mind.
 This is a simple example that allows updating
@@ -101,15 +103,25 @@ a post if the user is an admin, or if the post is unpublished:</p>
   <span class="k">def</span> <span class="m">update?</span>
     user.admin? || <span class="o">!</span>post.published?
   <span class="k">end</span>
+<span class="k">end</span>
+
+
+<span class="c"># Somewhere in your code</span>
+<span class="k">def</span> <span class="m">update</span>
+  @post <span class="o">=</span> <span class="t">Post</span>.find(params[<span class="n">:id</span>])
+  <span class="t">Praetorian</span>.authorize(current_user, @post, <span class="n">:update?</span>) <span class="c"># You can also use .authorise if you&#39;re a Brit</span>
+  <span class="c"># Rest of code flow</span>
 <span class="k">end</span></code></pre>
 
 <p>There are two things to notice here:</p>
 
-<ul><li>The Post is a class that should obey a certain Policy. We can either write a <code>policy_class</code> method to return the policy class name, or Praetorian will assume the policy classname to be <code>#{model_name}Policy</code>.</li></ul>
+<ul><li>The Post is a class that should obey a certain Policy. We can either write a <code>policy_class</code> method to return the policy class name, or Praetorian will assume the policy classname to be <code>#{variable_name}Policy</code>.</li></ul>
 
 <ul><li>The Policy class includes <code><a href="Praetorian/Policy.html">Praetorian::Policy</a></code>. This adds default query methods to our policy as defaults that should be overwritten as necessary.</li></ul>
 
 <p>The default query methods defined in <code><a href="Praetorian/Policy.html">Praetorian::Policy</a></code> are: <code>index?</code>, <code>show?</code>, <code>create?</code>, <code>new?</code>, <code>update?</code>, <code>edit?</code>, <code>destroy?</code>.</p>
+
+<p>A <code><a href="Praetorian/NotAuthorizedException.html">Praetorian::NotAuthorizedException</a></code> will be raised if the user is not authorized to perform said query on the record.</p>
 
 <p>Ok. So far, pretty simple.</p>
 
@@ -126,16 +138,20 @@ a post if the user is an admin, or if the post is unpublished:</p>
   <span class="k">end</span>
 <span class="k">end</span></code></pre>
 
-<p>Supposing that you have an instance of class <code>Post</code>, Praetorian lets you authorize the object use in
-your code flow:</p>
+<h3>Including the shard as a module</h3>
 
-<pre><code class="language-crystal"><span class="k">def</span> <span class="m">update</span>
+<p>You can include the shard as a module in your controller base class to avoid the prefix:</p>
+
+<pre><code class="language-crystal"><span class="k">class</span> <span class="t">ApplicationController</span>
+  <span class="k">include</span> <span class="t">Praetorian</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="t">PostController</span> <span class="o">&lt;</span> <span class="t">ApplicationController</span>
   @post <span class="o">=</span> <span class="t">Post</span>.find(params[<span class="n">:id</span>])
-  <span class="t">Praetorian</span>.authorize(current_user, @post, <span class="n">:update?</span>)
-  <span class="c"># Rest of code flow</span>
+  authorize(current_user, @post, <span class="n">:update?</span>) <span class="c"># yay no prefix</span>
 <span class="k">end</span></code></pre>
 
-<p>A <code><a href="Praetorian/NotAuthorizedException.html">Praetorian::NotAuthorizedException</a></code> will be raised if the user is not authorized to perform said query on the record.</p>
+<h3>Using a specific policy class</h3>
 
 <p>You can pass an argument to override the policy class if necessary. For example:</p>
 

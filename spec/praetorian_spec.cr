@@ -41,5 +41,11 @@ describe Praetorian do
       post = Post.new(user)
       Praetorian.authorise(user, post, :index?).should eq(post)
     end
+
+    it "can be called with a string as an action" do
+      user = User.new
+      post = Post.new(user)
+      Praetorian.authorize(user, post, "index?").should eq(post)
+    end
   end
 end

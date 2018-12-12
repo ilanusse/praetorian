@@ -89,21 +89,21 @@
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/ilanusse/praetorian/blob/f74375ebdf0a6e5bcbebe03140f2c4da2ca6d10e/src/praetorian/version.cr#L1" target="_blank">
+      <a href="https://github.com/ilanusse/praetorian/blob/677b1ff6e79e6475fc137187a36be95b5a3b26f4/src/praetorian/version.cr#L1" target="_blank">
         praetorian/version.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/ilanusse/praetorian/blob/f74375ebdf0a6e5bcbebe03140f2c4da2ca6d10e/src/praetorian.cr#L3" target="_blank">
+      <a href="https://github.com/ilanusse/praetorian/blob/677b1ff6e79e6475fc137187a36be95b5a3b26f4/src/praetorian.cr#L3" target="_blank">
         praetorian.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/ilanusse/praetorian/blob/f74375ebdf0a6e5bcbebe03140f2c4da2ca6d10e/src/praetorian/policy.cr#L1" target="_blank">
+      <a href="https://github.com/ilanusse/praetorian/blob/677b1ff6e79e6475fc137187a36be95b5a3b26f4/src/praetorian/policy.cr#L1" target="_blank">
         praetorian/policy.cr
       </a>
     
@@ -136,6 +136,18 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
+        <a href="#authorise%28user%2Cobject%2Cquery%2Cpolicy_class%29-macro" class="signature"><strong>authorise</strong>(user, object, query, policy_class)</a>
+        
+          <div class="summary"><p>Same as .authorize </p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#authorise%28user%2Cobject%2Cquery%29-macro" class="signature"><strong>authorise</strong>(user, object, query)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#authorize%28user%2Cobject%2Cquery%2Cpolicy_class%29-macro" class="signature"><strong>authorize</strong>(user, object, query, policy_class)</a>
         
           <div class="summary"><p>Retrieves the policy for the given object, initializing it with the object and user and finally throwing an error if the user is not authorized to perform the given action.</p></div>
@@ -149,6 +161,8 @@
     
       <li class="entry-summary">
         <a href="#check_auth%28query%2Cobject%2Cpolicy%29-macro" class="signature"><strong>check_auth</strong>(query, object, policy)</a>
+        
+          <div class="summary"><p>Performs actual policy query check </p></div>
         
       </li>
     
@@ -169,6 +183,40 @@
 
   <h2>Macro Detail</h2>
   
+    <div class="entry-detail" id="authorise(user,object,query,policy_class)-macro">
+      <div class="signature">
+        
+        macro <strong>authorise</strong>(user, object, query, policy_class)
+
+        <a class="method-permalink" href="#authorise%28user%2Cobject%2Cquery%2Cpolicy_class%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>Same as .authorize</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ilanusse/praetorian/blob/677b1ff6e79e6475fc137187a36be95b5a3b26f4/src/praetorian.cr#L40" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="authorise(user,object,query)-macro">
+      <div class="signature">
+        
+        macro <strong>authorise</strong>(user, object, query)
+
+        <a class="method-permalink" href="#authorise%28user%2Cobject%2Cquery%29-macro">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ilanusse/praetorian/blob/677b1ff6e79e6475fc137187a36be95b5a3b26f4/src/praetorian.cr#L44" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="authorize(user,object,query,policy_class)-macro">
       <div class="signature">
         
@@ -184,7 +232,7 @@ authorized to perform the given action.</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ilanusse/praetorian/blob/f74375ebdf0a6e5bcbebe03140f2c4da2ca6d10e/src/praetorian.cr#L18" target="_blank">View source</a>]
+          [<a href="https://github.com/ilanusse/praetorian/blob/677b1ff6e79e6475fc137187a36be95b5a3b26f4/src/praetorian.cr#L18" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -200,7 +248,7 @@ authorized to perform the given action.</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ilanusse/praetorian/blob/f74375ebdf0a6e5bcbebe03140f2c4da2ca6d10e/src/praetorian.cr#L24" target="_blank">View source</a>]
+          [<a href="https://github.com/ilanusse/praetorian/blob/677b1ff6e79e6475fc137187a36be95b5a3b26f4/src/praetorian.cr#L24" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -213,10 +261,12 @@ authorized to perform the given action.</p></div>
         <a class="method-permalink" href="#check_auth%28query%2Cobject%2Cpolicy%29-macro">#</a>
       </div>
       
+        <div class="doc"><p>Performs actual policy query check</p></div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/ilanusse/praetorian/blob/f74375ebdf0a6e5bcbebe03140f2c4da2ca6d10e/src/praetorian.cr#L37" target="_blank">View source</a>]
+          [<a href="https://github.com/ilanusse/praetorian/blob/677b1ff6e79e6475fc137187a36be95b5a3b26f4/src/praetorian.cr#L51" target="_blank">View source</a>]
         
       </div>
     </div>
