@@ -7,11 +7,11 @@ description: |
 authors:
   - Iñaki Lanusse <inakilanusse@gmail.com>
 
-crystal: 0.27.2
+crystal: 0.29.0
 
 license: MIT
 
 development_dependencies:
   ameba:
     github: veelenga/ameba
-    version: 0.9.0
+    version: 0.10.0
