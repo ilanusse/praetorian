@@ -1,5 +1,5 @@
 name: praetorian
-version: 0.3.2
+version: 0.3.3
 
 description: |
   Minimalist authorization library for Crystal inspired by Pundit.
@@ -7,11 +7,11 @@ description: |
 authors:
   - Iñaki Lanusse <inakilanusse@gmail.com>
 
-crystal: 0.29.0
+crystal: 0.31.1
 
 license: MIT
 
 development_dependencies:
   ameba:
     github: veelenga/ameba
-    version: 0.10.0
+    version: 0.10.1
