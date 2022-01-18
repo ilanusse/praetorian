@@ -6,7 +6,7 @@ module Praetorian
   #
   class NotAuthorizedException < Exception
     def initialize(query, object, policy)
-      super("Not allowed to #{query} this #{object.to_s} using #{policy}")
+      super("Not allowed to #{query} this #{object} using #{policy}")
     end
   end
 
